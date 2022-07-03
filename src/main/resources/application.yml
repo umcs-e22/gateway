@@ -20,7 +20,7 @@ spring:
         - id: books-service
           uri: lb://BOOKS-SERVICE
           predicates:
-            - Path=/api/v1/persons/**
+            - Path=/v1/books/**
           filters:
             -  AuthFilter
         - id: auth-service
