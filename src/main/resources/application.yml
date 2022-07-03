@@ -1,0 +1,32 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+my:
+  secretKey: test123
+
+
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: books-service
+          uri: lb://BOOKS-SERVICE
+          predicates:
+            - Path=/api/v1/persons/**
+          filters:
+            -  AuthFilter
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/auth/**
+
+server:
+  port: 8000
