@@ -10,11 +10,6 @@ import org.springframework.context.annotation.Bean;
 @EnableEurekaClient
 public class CloudGatewayApplication {
 
-//	@Bean
-//	public GlobalFilter customFilter() {
-//		return new CustomGlobalFilter();
-//	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(CloudGatewayApplication.class, args);
 	}

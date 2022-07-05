@@ -27,6 +27,12 @@ spring:
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/api/auth/**
+        - id: cart-service
+          uri: lb://CART-SERVICE
+          predicates:
+            - Path=/v1/carts/**
+          filters:
+            - AuthFilter
 
 server:
   port: 8000

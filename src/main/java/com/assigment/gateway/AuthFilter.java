@@ -24,15 +24,17 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            String auth;
             if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                throw new RuntimeException("Missing authorization information");
+                auth = "Bearer " + exchange.getRequest().getCookies().getFirst("accessToken").getValue();
+                // throw new RuntimeException("Missing authorization information");
+            }else{
+                auth = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
             }
-
-            String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
 
             return webClientBuilder.build()
                     .post()
-                    .uri("http://AUTH-SERVICE/api/auth/check").header("Authorization", authHeader)
+                    .uri("http://AUTH-SERVICE/api/auth/check").header("Authorization", auth)
                     .retrieve().bodyToMono(UserDto.class)
                     .map(userDto -> {
                         exchange.getRequest()
@@ -49,3 +51,4 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
         // empty class as I don't need any particular configuration
     }
 }
+
