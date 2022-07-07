@@ -39,6 +39,12 @@ spring:
             - Path=/v1/orders/**
           filters:
             - AuthFilter
+        - id: payments-service
+          uri: lb://PAYMENTS-SERVICE
+          predicates:
+            - Path=/v1/payments/**
+          filters:
+            - AuthFilter
 
 server:
   port: 8000
