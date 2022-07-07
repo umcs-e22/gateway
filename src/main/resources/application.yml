@@ -33,6 +33,12 @@ spring:
             - Path=/v1/carts/**
           filters:
             - AuthFilter
+        - id: orders-service
+          uri: lb://ORDERS-SERVICE
+          predicates:
+            - Path=/v1/orders/**
+          filters:
+            - AuthFilter
 
 server:
   port: 8000
